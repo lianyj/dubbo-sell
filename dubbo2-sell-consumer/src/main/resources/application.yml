@@ -1,0 +1,14 @@
+server:
+  port: 3020
+
+spring:
+  dubbo:
+    application:
+      name: dubbo2-sell-consumer
+    registry:
+      address: zookeeper://127.0.0.1:2181
+    scan: com.lianyanjie.dubbo
+
+logging:
+  file: ./log/dubbo2-sell-consumer.log
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lianyanjie.dubbo.dubbo2sellprovider.mapper.OrderDetailMapper">
+    <resultMap id="BaseResultMap" type="com.lianyanjie.dubbo.dubbo2api.model.OrderDetail">
+        <result column="detail_id" property="detailId" />
+        <result column="order_id" property="orderId" />
+        <result column="product_id" property="productId" />
+        <result column="product_name" property="productName" />
+        <result column="product_price" property="productPrice" />
+        <result column="product_quantity" property="productQuantity" />
+        <result column="product_icon" property="productIcon" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    detail_id, order_id,product_id, product_name, product_price, product_quantity, product_icon, create_time,update_time
+   </sql>
+
+
+    <insert id="insert" parameterType="com.lianyanjie.dubbo.dubbo2api.model.OrderDetail" useGeneratedKeys="true" keyProperty="detail_id">
+        INSERT INTO order_detail (
+        <include refid="Base_Column_List"/>
+        ) VALUES (
+        null,
+        #{orderId},
+        #{productId},
+        #{productName},
+        #{productPrice},
+        #{productQuantity},
+        #{productIcon},
+        now(),
+        now()
+        )
+    </insert>
+
+    <select id="getByParam" parameterType="com.lianyanjie.dubbo.dubbo2api.model.OrderDetail" resultMap="BaseResultMap" useCache="false">
+        SELECT <include refid="Base_Column_List" /> FROM order_detail
+        <include refid="condition"/>
+    </select>
+
+
+    <sql id="condition">
+        <trim prefix="where" prefixOverrides="and">
+            <if test="search.detailId != null and search.detailId != 0 ">
+                AND detail_id = #{search.detailId}
+            </if>
+            <if test="search.orderId != null and search.orderId != 0 ">
+                AND order_id = #{search.orderId}
+            </if>
+            <if test="search.productId != null and search.productId != 0 ">
+                AND product_id = #{search.productId}
+            </if>
+        </trim>
+    </sql>
+
+</mapper>
